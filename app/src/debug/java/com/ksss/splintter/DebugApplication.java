@@ -7,6 +7,8 @@ import com.facebook.stetho.Stetho;
 import com.nshmura.strictmodenotifier.StrictModeNotifier;
 import com.squareup.leakcanary.LeakCanary;
 
+import timber.log.Timber;
+
 /**
  * Created by Nahuel Barrios on 7/16/16.
  */
@@ -14,7 +16,11 @@ public class DebugApplication extends MainApplication {
 
     @Override
     public void onCreate() {
+        Timber.plant(new Timber.DebugTree());
+
         super.onCreate();
+
+        Timber.d("Creating DEBUG application...");
 
         Stetho.initializeWithDefaults(this);
         LeakCanary.install(this);
