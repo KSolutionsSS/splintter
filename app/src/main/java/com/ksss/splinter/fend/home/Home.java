@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.ksss.splinter.R;
 
 /**
- * Created by nbarrios on 7/16/16.
+ * Created by Nahuel Barrios on 7/16/16.
  */
 
 public class Home extends Activity {
