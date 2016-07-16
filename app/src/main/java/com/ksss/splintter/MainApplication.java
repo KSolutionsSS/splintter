@@ -7,7 +7,6 @@ import timber.log.Timber;
 /**
  * Created by Nahuel Barrios on 7/16/16.
  */
-
 public class MainApplication extends Application {
 
     @Override
