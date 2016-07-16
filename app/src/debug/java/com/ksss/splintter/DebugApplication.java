@@ -1,4 +1,4 @@
-package com.ksss.splinter;
+package com.ksss.splintter;
 
 import android.os.Handler;
 import android.os.StrictMode;
