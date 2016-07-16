@@ -10,7 +10,7 @@ import com.squareup.leakcanary.LeakCanary;
 /**
  * Created by Nahuel Barrios on 7/16/16.
  */
-public class DebugApplication extends Application {
+public class DebugApplication extends MainApplication {
 
     @Override
     public void onCreate() {
