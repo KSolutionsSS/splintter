@@ -1,4 +1,4 @@
-package com.ksss.splintter.fend.home;
+package com.ksss.splintter.features.home;
 
 import android.app.Activity;
 import android.os.Bundle;
