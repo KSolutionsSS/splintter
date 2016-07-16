@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ksss.splinter">
 
-    <application android:name=".DebugApplication" />
+    <application
+        android:name=".DebugApplication"
+        tools:replace="name" />
 
 </manifest>

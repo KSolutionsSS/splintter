@@ -9,11 +9,12 @@
     <issue id="GradleDependency" severity="error" />
     <issue id="InflateParams" severity="warning" />
     <issue id="InlinedApi" severity="error" />
-    <issue id="InvalidPackage" severity="error" />
+    <issue id="InvalidPackage" severity="warning" />
     <issue id="MissingId" severity="error" />
     <issue id="NewerVersionAvailable" severity="warning" />
     <issue id="OldTargetApi" severity="warning" />
     <issue id="PrivateResource" severity="warning" />
+    <issue id="Registered" severity="error" />
     <issue id="ScrollViewSize" severity="warning" />
     <issue id="SpUsage" severity="ignore" />
     <issue id="UnusedAttribute" severity="warning" />
