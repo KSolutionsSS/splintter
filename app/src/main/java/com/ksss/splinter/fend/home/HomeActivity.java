@@ -9,7 +9,7 @@ import com.ksss.splinter.R;
  * Created by Nahuel Barrios on 7/16/16.
  */
 
-public class Home extends Activity {
+public class HomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

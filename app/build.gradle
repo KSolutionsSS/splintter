@@ -53,5 +53,7 @@ dependencies {
     debugCompile "com.facebook.stetho:stetho:$stethoVersion"
     debugCompile "com.facebook.stetho:stetho-js-rhino:$stethoVersion"
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+
     testCompile 'junit:junit:4.12'
 }
