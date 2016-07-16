@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.monits.staticCodeAnalysis'
 
 android {
@@ -50,9 +51,15 @@ dependencies {
     androidLint 'com.monits:android-linters:1.1.9'
 
     def stethoVersion = '1.3.1'
-    debugCompile "com.facebook.stetho:stetho:$stethoVersion"
+    debugCompile("com.facebook.stetho:stetho:$stethoVersion") {
+        // Excluded because we couldn't apply dex-count plugin. ClassNotFoundException can be thrown when using Stetho
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
     // stetho-js-rhino lets you make things like https://github.com/facebook/stetho/tree/master/stetho-js-rhino#example
-    debugCompile "com.facebook.stetho:stetho-js-rhino:$stethoVersion"
+    debugCompile("com.facebook.stetho:stetho-js-rhino:$stethoVersion") {
+        // Excluded because we couldn't apply dex-count plugin. ClassNotFoundException can be thrown when using Stetho
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
 
