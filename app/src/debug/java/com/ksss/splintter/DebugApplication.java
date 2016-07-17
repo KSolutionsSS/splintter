@@ -7,6 +7,7 @@ import com.facebook.stetho.Stetho;
 import com.nshmura.strictmodenotifier.StrictModeNotifier;
 import com.squareup.leakcanary.LeakCanary;
 
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 /**
@@ -14,6 +15,7 @@ import timber.log.Timber;
  */
 public class DebugApplication extends MainApplication {
 
+    @DebugLog
     @Override
     public void onCreate() {
         Timber.plant(new Timber.DebugTree());
