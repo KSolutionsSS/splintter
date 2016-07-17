@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/onboarding_horizontal_margin"
+    android:layout_marginRight="@dimen/onboarding_horizontal_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="@string/onboarding_title"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/onboarding_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:enabled="false"
+        android:text="@string/onboarding_subtitle"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/onboarding_create_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onboarding_subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/distance_between_views_large"
+        android:onClick="createGroup"
+        android:text="@string/create_group"
+        android:textSize="16sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/onboarding_create_group"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/distance_between_views_medium"
+        android:enabled="false"
+        android:text="@string/onboarding_share_app"
+        android:textSize="12sp" />
+
+</RelativeLayout>
