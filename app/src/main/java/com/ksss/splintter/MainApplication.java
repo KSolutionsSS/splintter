@@ -2,6 +2,7 @@ package com.ksss.splintter;
 
 import android.app.Application;
 
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 /**
@@ -9,6 +10,7 @@ import timber.log.Timber;
  */
 public class MainApplication extends Application {
 
+    @DebugLog
     @Override
     public void onCreate() {
         super.onCreate();
