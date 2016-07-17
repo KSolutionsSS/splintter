@@ -28,4 +28,5 @@
     <string name="create_group_dialog_negative_button">Cerrar</string>
     <string name="view_group_expenses_pager_title">Gastos</string>
     <string name="view_group_expenses_summary_pager_title">Resumen</string>
+    <string name="create_group_dialog_hint">Cena del sábado</string>
 </resources>

@@ -78,6 +78,8 @@ public class GroupActivity extends AppCompatActivity {
 
     private void handleCreate() {
         final EditText input = new EditText(this);
+        input.setSingleLine();
+        input.setHint(R.string.create_group_dialog_hint);
         new AlertDialog.Builder(this)
                 .setView(input)
                 .setTitle(R.string.create_group_dialog_title)
