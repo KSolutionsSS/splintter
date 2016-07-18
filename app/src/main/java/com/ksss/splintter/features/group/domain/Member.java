@@ -2,40 +2,36 @@ package com.ksss.splintter.features.group.domain;
 
 import android.support.annotation.NonNull;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * // TODO: 7/17/16 Add auto-value!!
  * Created by Nahuel Barrios on 7/17/16.
  */
-public class Group {
-    private String name;
-    private List<Member> members;
+public class Member {
 
-    public Group(@NonNull String name) {
+    private String name;
+    private List<Expense> expenses;
+
+    public Member(String name) {
         this.name = name;
-        this.members = new ArrayList<>();
+        this.expenses = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
 
-    @NonNull
-    public List<Member> getMembers() {
-        return members;
-    }
-
-    public void addMember(Member member) {
-        members.add(member);
+    public void addExpense(@NonNull BigDecimal amount, @NonNull String description) {
+        expenses.add(new Expense(amount, description));
     }
 
     @Override
     public String toString() {
-        return "Group{" +
+        return "Member{" +
                 "name='" + name + '\'' +
-                ", members=" + members +
+                ", expenses=" + expenses +
                 '}';
     }
 }

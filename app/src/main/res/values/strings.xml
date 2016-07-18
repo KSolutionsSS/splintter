@@ -29,4 +29,9 @@
     <string name="view_group_expenses_pager_title">Gastos</string>
     <string name="view_group_expenses_summary_pager_title">Resumen</string>
     <string name="create_group_dialog_hint">Cena del sábado</string>
+    <string name="new_expense_dialog_positive_button">Agregar</string>
+    <string name="add_expense_amount_hint">100</string>
+    <string name="add_expense_person_hint">Nahu</string>
+    <string name="add_expense_dialog_title">Cargar nuevo gasto</string>
+    <string name="add_expense_description_hint">Bebida</string>
 </resources>
