@@ -47,7 +47,13 @@ staticCodeAnalysis {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    def supportLibraryVersion = '24.0.0'
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+
+    // Added because of the FloatingActionButton
+    compile "com.android.support:design:$supportLibraryVersion"
+
+    compile 'com.joanzapata.iconify:android-iconify-material:2.2.2'
 
     compile 'com.jakewharton.timber:timber:4.1.2'
 
