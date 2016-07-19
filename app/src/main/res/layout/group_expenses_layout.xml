@@ -3,26 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/default_horizontal_padding"
+    android:paddingStart="@dimen/default_horizontal_padding"
+    android:paddingTop="@dimen/default_horizontal_padding">
 
-    <ScrollView
-        android:id="@+id/container"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/prueba"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/prueba"
+        <include
+            android:id="@+id/el_input"
+            layout="@layout/group_view_add_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/el_input"
+            android:layout_marginTop="@dimen/distance_between_views_medium"
+            android:background="@color/divider_color" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/group_view_expenses_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wip"
-                android:textSize="32sp" />
-        </LinearLayout>
-    </ScrollView>
+            android:layout_below="@id/divider" />
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:layout_anchor="@id/container"
+        app:layout_anchor="@id/prueba"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

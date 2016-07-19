@@ -28,4 +28,12 @@ public class Expense {
                 ", date=" + date +
                 '}';
     }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

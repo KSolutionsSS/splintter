@@ -1,29 +1,33 @@
 package com.ksss.splintter.features.group.view;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.MaterialIcons;
 import com.ksss.splintter.R;
+import com.ksss.splintter.features.group.domain.Expense;
 import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.domain.Member;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 /**
  * Created by Nahuel Barrios on 7/16/16.
@@ -32,22 +36,29 @@ public class GroupExpensesFragment extends Fragment {
 
     private Group group;
 
-    private AlertDialog alertDialog;
-
-    private boolean setupAutocomplete = true;
-
     private AutoCompleteTextView memberEditText;
     private AutoCompleteTextView descriptionEditText;
     private EditText amountEditText;
+    private RecyclerView expensesRecyclerView;
 
-    private View layout;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        group = getCallback().getGroup();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // TODO: 7/17/16 What about changing the AlertDialog for an editable row in the RecyclerView?
-        layout = inflater.inflate(R.layout.group_expenses_layout, container, false);
+        View layout = inflater.inflate(R.layout.group_expenses_layout, container, false);
+        memberEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_person);
+        amountEditText = (EditText) layout.findViewById(R.id.add_expense_amount);
+        descriptionEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_description);
+        expensesRecyclerView = (RecyclerView) layout.findViewById(R.id.group_view_expenses_recycler_view);
+
+        setupRecyclerView();
 
         IconDrawable iconDrawable = new IconDrawable(getActivity(), MaterialIcons.md_plus_one);
         iconDrawable.colorRes(android.R.color.white);
@@ -55,82 +66,52 @@ public class GroupExpensesFragment extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.fab);
         fab.setImageDrawable(iconDrawable);
         fab.setOnClickListener(new View.OnClickListener() {
+
+            @DebugLog
             @Override
             public void onClick(View view) {
-                if (alertDialog == null) {
-                    buildAddExpenseDialog();
-                }
-
-                showDialog();
+                // TODO: 7/18/16 Add person?
+                Timber.e("What should I do in this case???");
             }
         });
 
         return layout;
     }
 
-    /**
-     * Build the alert dialog to prevent building when the user is wants to use it.
-     */
+    private void setupRecyclerView() {
+        expensesRecyclerView.setHasFixedSize(true);
+
+        expensesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        expensesRecyclerView.setAdapter(new ExpensesAdapter(getGroupExpenses()));
+    }
+
+    private List<Expense> getGroupExpenses() {
+
+        List<Expense> result = new ArrayList<>();
+
+        for (Member eachMember : group.getMembers()) {
+            for (Expense eachExpense : eachMember.getExpenses()) {
+                result.add(eachExpense);
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        buildAddExpenseDialog();
+
+        setupMembersAutocomplete();
+        setupDescriptionAutocomplete();
     }
 
-    @DebugLog
-    private void buildAddExpenseDialog() {
-        alertDialog = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.add_expense_dialog_title)
-                .setView(R.layout.group_view_add_expense)
-                .setPositiveButton(R.string.new_expense_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Member member = ((MembersAdapter) GroupExpensesFragment.this.memberEditText.getAdapter()).findByName(GroupExpensesFragment.this.memberEditText.getText().toString());
-
-                        group = getCallback().getGroup();
-                        if (member == null) {
-                            // TODO: 7/17/16 Make a class diagram taking into account that members will share groups so we must know which expense is related to which group
-                            member = new Member(GroupExpensesFragment.this.memberEditText.getText().toString());
-                            group.addMember(member);
-                        }
-
-                        member.addExpense(new BigDecimal(amountEditText.getText().toString()), descriptionEditText.getText().toString());
-                        // TODO: 7/17/16 What about Realm.io?
-
-
-                        // TODO: 7/17/16 Come on dude! Let's use a RecyclerView =)
-                        TextView textView = new TextView(getActivity());
-                        textView.setText(member.getName() + ": " + amountEditText.getText().toString());
-                        LinearLayout list = (LinearLayout) layout.findViewById(R.id.prueba);
-                        list.addView(textView);
-
-                        clearDialog();
-                    }
-                })
-                .setNegativeButton(R.string.create_group_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        clearDialog();
-                    }
-                }).create();
-    }
-
-    /**
-     * Wrapper for {@link AlertDialog#show()} because we need to populate the {@link AutoCompleteTextView} we're using to display group members.
-     */
-    private void showDialog() {
-        alertDialog.show();
-        if (setupAutocomplete) {
-            setupMembersAutocomplete();
-            setupDescriptionAutocomplete();
-            amountEditText = (EditText) alertDialog.findViewById(R.id.add_expense_amount);
-        }
+    private void setupMembersAutocomplete() {
+        memberEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getMembers()));
     }
 
     private void setupDescriptionAutocomplete() {
-        descriptionEditText = (AutoCompleteTextView) alertDialog.findViewById(R.id.add_expense_description);
-
         // TODO: 7/17/16 Make it dynamic! realm.io comes to playground again =)
         String[] hardCodedSuggestions = {"Bebida", "Nafta", "Pizzas"};
 
@@ -139,21 +120,18 @@ public class GroupExpensesFragment extends Fragment {
         descriptionEditText.setAdapter(adapter);
     }
 
-    /**
-     * Clear {@link AlertDialog} layout views because we're building it just once so the next time you call {@link AlertDialog#show()}
-     * views must not contain any value.
-     */
-    private void clearDialog() {
-        memberEditText.setText("");
-        amountEditText.setText("");
-        descriptionEditText.setText("");
-    }
+    private void onNewExpenseAdded() {
+        Member member = ((MembersAdapter) GroupExpensesFragment.this.memberEditText.getAdapter()).findByName(GroupExpensesFragment.this.memberEditText.getText().toString());
 
-    private void setupMembersAutocomplete() {
-        memberEditText = (AutoCompleteTextView) alertDialog.findViewById(R.id.add_expense_person);
+        group = getCallback().getGroup();
+        if (member == null) {
+            // TODO: 7/17/16 Make a class diagram taking into account that members will share groups so we must know which expense is related to which group
+            member = new Member(GroupExpensesFragment.this.memberEditText.getText().toString());
+            group.addMember(member);
+        }
 
-        memberEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getMembers()));
-        setupAutocomplete = false;
+        member.addExpense(new BigDecimal(amountEditText.getText().toString()), descriptionEditText.getText().toString());
+        // TODO: 7/17/16 What about Realm.io?
     }
 
     /**
@@ -173,15 +151,44 @@ public class GroupExpensesFragment extends Fragment {
         return callback;
     }
 
-    /**
-     * I don't want to create any toString, let's use auto value!!
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "GroupExpensesFragment{" +
-                "setupMembersAutocomplete=" + setupAutocomplete +
-                '}';
+    private class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ViewHolder> {
+
+        private final List<Expense> expenses;
+
+        public ExpensesAdapter(@NonNull List<Expense> groupExpenses) {
+            this.expenses = groupExpenses;
+        }
+
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            private TextView one;
+            private TextView two;
+            private TextView three;
+
+            public ViewHolder(View layout) {
+                super(layout);
+                one = (TextView) layout.findViewById(R.id.field_one);
+                two = (TextView) layout.findViewById(R.id.field_two);
+                three = (TextView) layout.findViewById(R.id.field_three);
+            }
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ViewHolder(getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Expense expense = expenses.get(position);
+            holder.one.setText(expense.getAmount().toString());
+            holder.two.setText(expense.getDescription());
+        }
+
+        @Override
+        public int getItemCount() {
+            return expenses.size();
+        }
     }
 }

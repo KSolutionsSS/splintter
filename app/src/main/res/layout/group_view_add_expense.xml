@@ -3,32 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.AppCompatAutoCompleteTextView
-        android:id="@+id/add_expense_person"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/group_view_add_expense_row"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="@string/add_expense_person_hint"
-        android:inputType="textPersonName" />
+        android:layout_alignParentTop="true">
 
-    <EditText
-        android:id="@+id/add_expense_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/add_expense_person"
-        android:layout_below="@+id/add_expense_person"
-        android:ems="10"
-        android:hint="@string/add_expense_amount_hint"
-        android:inputType="number" />
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/add_expense_person"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.65"
+            android:ems="10"
+            android:hint="@string/add_expense_person_hint"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/add_expense_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:layout_marginStart="@dimen/distance_between_views_medium"
+            android:ems="10"
+            android:hint="@string/add_expense_amount_hint"
+            android:inputType="number" />
+    </LinearLayout>
 
     <android.support.v7.widget.AppCompatAutoCompleteTextView
         android:id="@+id/add_expense_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_expense_amount"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/group_view_add_expense_row"
         android:ems="10"
         android:hint="@string/add_expense_description_hint"
         android:inputType="textPersonName" />
