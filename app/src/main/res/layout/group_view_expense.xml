@@ -1,28 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/onboarding_horizontal_margin">
 
-    <TextView
-        android:id="@+id/field_one"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.4"
-        tools:text="nahuel" />
+    <ImageView
+        android:id="@+id/expense_row_image"
+        android:layout_width="@dimen/list_icon_size"
+        android:background="@drawable/rounded_background"
+        android:layout_height="@dimen/list_icon_size"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp" />
 
-    <TextView
-        android:id="@+id/field_two"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/expense_main_content_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        tools:text="99" />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@id/expense_row_image">
 
-    <TextView
-        android:id="@+id/field_three"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/expense_person"
+            style="@style/AppTheme.ListMainContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            tools:text="Nahu gasto" />
+
+        <TextView
+            android:id="@+id/expense_amount"
+            style="@style/AppTheme.ListMainContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            tools:text="$ 99" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expense_secondary_content_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.4"
-        tools:text="nafta" />
-</LinearLayout>
+        android:layout_below="@id/expense_main_content_container"
+        android:layout_toEndOf="@id/expense_row_image">
+
+        <TextView
+            android:id="@+id/expense_description"
+            style="@style/AppTheme.ListSecondaryContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            tools:text="Nafta" />
+
+        <TextView
+            android:id="@+id/expense_date"
+            style="@style/AppTheme.ListSecondaryContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            tools:text="16/10" />
+    </LinearLayout>
+
+
+</RelativeLayout>

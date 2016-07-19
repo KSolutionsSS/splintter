@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -23,8 +24,10 @@ import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.domain.Member;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
@@ -162,28 +165,39 @@ public class GroupExpensesFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView one;
-            private TextView two;
-            private TextView three;
+            private TextView person;
+            private TextView amount;
+            private TextView description;
+            private TextView date;
 
             public ViewHolder(View layout) {
                 super(layout);
-                one = (TextView) layout.findViewById(R.id.field_one);
-                two = (TextView) layout.findViewById(R.id.field_two);
-                three = (TextView) layout.findViewById(R.id.field_three);
+                person = (TextView) layout.findViewById(R.id.expense_person);
+                amount = (TextView) layout.findViewById(R.id.expense_amount);
+                description = (TextView) layout.findViewById(R.id.expense_description);
+                date = (TextView) layout.findViewById(R.id.expense_date);
             }
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false));
+            View layout = getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false);
+
+            ImageView icon = (ImageView) layout.findViewById(R.id.expense_row_image);
+            IconDrawable iconDrawable = new IconDrawable(getActivity(), MaterialIcons.md_arrow_drop_down);
+            iconDrawable.colorRes(R.color.expense_out);
+            icon.setImageDrawable(iconDrawable);
+
+            return new ViewHolder(layout);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Expense expense = expenses.get(position);
-            holder.one.setText(expense.getAmount().toString());
-            holder.two.setText(expense.getDescription());
+            holder.person.setText("Nahue");
+            holder.amount.setText("$ " + expense.getAmount().toString());
+            holder.description.setText(expense.getDescription());
+            holder.date.setText(new SimpleDateFormat("MMMM, dd", Locale.getDefault()).format(expense.getDate().getTime()));
         }
 
         @Override

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="divider_color">#494949</color>
+
+    <color name="font_gray">#898989</color>
+    <color name="font_lightgray">#cccccc</color>
+
+    <color name="expense_out">#ff0000</color>
 </resources>

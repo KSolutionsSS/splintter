@@ -36,4 +36,8 @@ public class Expense {
     public String getDescription() {
         return description;
     }
+
+    public Calendar getDate() {
+        return date;
+    }
 }

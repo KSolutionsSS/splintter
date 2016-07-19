@@ -3,6 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/font_medium</item>
+    </style>
+
+    <style name="AppTheme.ListMainContent" />
+
+    <style name="AppTheme.ListSecondaryContent">
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:textColor">@color/font_gray</item>
     </style>
 
 </resources>
