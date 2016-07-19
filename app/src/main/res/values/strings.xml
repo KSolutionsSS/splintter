@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Splintter</string>
+    <string name="hello_world">Hello World</string>
+
+    <string name="create_group">Crear un nuevo gasto</string>
+
+    <!-- ======================================================================================= -->
+    <!-- ======================================================================================= -->
+    <!-- Onboarding strings -->
+    <!-- ======================================================================================= -->
+    <!-- ======================================================================================= -->
+
+    <string name="onboarding_title">Bienvenido a Splintter</string>
+    <string name="onboarding_subtitle">¡Controla cuanto gastas con tus amigos y dividi las cuentas fácil!</string>
+    <string name="onboarding_share_app">Contar de la aplicación a un amigo</string>
+
     <string name="using_data_binding">Using DataBinding</string>
     <string name="using_data_binding_value">It works!!</string>
 </resources>
