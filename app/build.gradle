@@ -47,7 +47,7 @@ staticCodeAnalysis {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.0'
 
     compile 'com.jakewharton.timber:timber:4.1.2'
 
