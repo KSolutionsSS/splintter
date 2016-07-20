@@ -18,6 +18,12 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.MaterialIcons;
 import com.ksss.splintter.R;
+import com.ksss.splintter.features.group.backend.GroupBO;
+import com.ksss.splintter.features.group.backend.GroupBOImpl;
+import com.ksss.splintter.features.group.backend.PersonBO;
+import com.ksss.splintter.features.group.backend.PersonBOImpl;
+import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
+import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
 import com.ksss.splintter.features.group.domain.Expense;
 import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.domain.Member;
@@ -38,14 +44,19 @@ public class GroupExpensesFragment extends Fragment {
 
     private Group group;
 
-    private AutoCompleteTextView memberEditText;
+    private AutoCompleteTextView personEditText;
     private AutoCompleteTextView descriptionEditText;
     private EditText amountEditText;
     private RecyclerView expensesRecyclerView;
 
+    private PersonBO personBO;
+    private GroupBO groupBO;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        personBO = new PersonBOImpl();
+        groupBO = new GroupBOImpl();
 
         group = getCallback().getGroup();
     }
@@ -55,7 +66,7 @@ public class GroupExpensesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View layout = inflater.inflate(R.layout.group_expenses_layout, container, false);
-        memberEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_person);
+        personEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_person);
         amountEditText = (EditText) layout.findViewById(R.id.add_expense_amount);
         descriptionEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_description);
         expensesRecyclerView = (RecyclerView) layout.findViewById(R.id.group_view_expenses_recycler_view);
@@ -74,6 +85,8 @@ public class GroupExpensesFragment extends Fragment {
             public void onClick(View view) {
                 // TODO: 7/18/16 Add person?
                 Timber.e("What should I do in this case???");
+                onNewExpenseAdded();
+
             }
         });
 
@@ -110,7 +123,7 @@ public class GroupExpensesFragment extends Fragment {
     }
 
     private void setupMembersAutocomplete() {
-        memberEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getMembers()));
+        personEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getMembers()));
     }
 
     private void setupDescriptionAutocomplete() {
@@ -123,12 +136,22 @@ public class GroupExpensesFragment extends Fragment {
     }
 
     private void onNewExpenseAdded() {
-        Member member = ((MembersAdapter) GroupExpensesFragment.this.memberEditText.getAdapter()).findByName(GroupExpensesFragment.this.memberEditText.getText().toString());
+        Member member = ((MembersAdapter) GroupExpensesFragment.this.personEditText.getAdapter()).findByName(GroupExpensesFragment.this.personEditText.getText().toString());
 
         group = getCallback().getGroup();
         if (member == null) {
             // TODO: 7/17/16 Make a class diagram taking into account that members will share groups so we must know which expense is related to which group
-            member = new Member(GroupExpensesFragment.this.memberEditText.getText().toString());
+            try {
+                personBO.create(personEditText.getText().toString());
+                // TODO: 7/19/16 Update person adapter!
+            } catch (EmptyNameException e) {
+                e.printStackTrace();
+            } catch (NameTooShortException e) {
+                e.printStackTrace();
+            }
+
+            member = new Member(GroupExpensesFragment.this.personEditText.getText().toString());
+            // TODO: 7/19/16 Replace this list#for with a call to the service
             group.addMember(member);
         }
 
