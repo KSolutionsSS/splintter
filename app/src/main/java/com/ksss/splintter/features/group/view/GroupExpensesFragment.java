@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -181,21 +180,14 @@ public class GroupExpensesFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View layout = getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false);
-
-            ImageView icon = (ImageView) layout.findViewById(R.id.expense_row_image);
-            IconDrawable iconDrawable = new IconDrawable(getActivity(), MaterialIcons.md_arrow_drop_down);
-            iconDrawable.colorRes(R.color.expense_out);
-            icon.setImageDrawable(iconDrawable);
-
-            return new ViewHolder(layout);
+            return new ViewHolder(getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false));
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Expense expense = expenses.get(position);
             holder.person.setText("Nahue");
-            holder.amount.setText("$ " + expense.getAmount().toString());
+            holder.amount.setText(expense.getAmount().toString());
             holder.description.setText(expense.getDescription());
             holder.date.setText(new SimpleDateFormat("MMMM, dd", Locale.getDefault()).format(expense.getDate().getTime()));
         }

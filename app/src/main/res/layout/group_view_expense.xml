@@ -6,13 +6,17 @@
     android:orientation="horizontal"
     android:padding="@dimen/onboarding_horizontal_margin">
 
-    <ImageView
+    <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/expense_row_image"
-        android:layout_width="@dimen/list_icon_size"
-        android:background="@drawable/rounded_background"
-        android:layout_height="@dimen/list_icon_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:text="{md-account-circle}"
+        android:textColor="@color/icon_default"
+        android:textSize="@dimen/icon_large"
+        tools:ignore="HardcodedText"
+        tools:text="U" />
 
     <LinearLayout
         android:id="@+id/expense_main_content_container"
@@ -29,13 +33,24 @@
             android:layout_weight="0.8"
             tools:text="Nahu gasto" />
 
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/expense_price_preffix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/distance_between_views_medium"
+            android:text="{md-attach-money}"
+            android:textColor="@color/icon_default"
+            android:textSize="@dimen/icon_medium"
+            tools:ignore="HardcodedText"
+            tools:text="$" />
+
         <TextView
             android:id="@+id/expense_amount"
             style="@style/AppTheme.ListMainContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            tools:text="$ 99" />
+            tools:text="99" />
     </LinearLayout>
 
     <LinearLayout

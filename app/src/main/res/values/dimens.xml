@@ -11,5 +11,9 @@
     <dimen name="font_medium">14sp</dimen>
     <dimen name="font_large">18sp</dimen>
 
+    <dimen name="icon_small">16sp</dimen>
+    <dimen name="icon_medium">20sp</dimen>
+    <dimen name="icon_large">48sp</dimen>
+
     <dimen name="list_icon_size">32dp</dimen>
 </resources>
