@@ -20,6 +20,8 @@ import com.ksss.splintter.features.group.view.GroupExpensesFragment;
 import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
 
 import hugo.weaving.DebugLog;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import timber.log.Timber;
 
 /**
@@ -91,6 +93,16 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
         group.addMember(new Member("Nahu"));
         group.addMember(new Member("Paul"));
         group.addMember(new Member("Tincho"));
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        Timber.e("Members: %s", realm.where(Member.class).findAll().size());
+        Timber.e("Groups: %s", realm.where(Group.class).findAll().size());
+        realm.commitTransaction();
     }
 
     private void handleView() {

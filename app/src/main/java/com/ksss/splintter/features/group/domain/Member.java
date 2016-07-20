@@ -7,19 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * Created by Nahuel Barrios on 7/17/16.
  */
-public class Member {
+public class Member extends RealmObject {
 
     private String name;
+
+    @Ignore
     private List<Expense> expenses;
+
+    public Member() {
+    }
 
     public Member(String name) {
         this.name = name;
         this.expenses = new ArrayList<>();
 
-        mockExpenses();
+//        mockExpenses();
     }
 
     private void mockExpenses() {
@@ -49,5 +57,13 @@ public class Member {
 
     public List<Expense> getExpenses() {
         return expenses;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
     }
 }
