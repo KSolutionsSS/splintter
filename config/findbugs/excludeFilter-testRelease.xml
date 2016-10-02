@@ -30,7 +30,7 @@
             <Bug pattern="CSI_CHAR_SET_ISSUES_USE_STANDARD_CHARSET" />
 
             <!-- This is supposedly turned off by default, by I'm seeing it here and there... fb-contrib's is better -->
-            <Bug pattern="CD_CIRCULAR_DEPENDENCY"/>
+            <Bug pattern="CD_CIRCULAR_DEPENDENCY" />
         </Or>
     </Match>
 </FindBugsFilter>

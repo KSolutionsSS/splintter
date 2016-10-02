@@ -55,7 +55,7 @@
     <issue id="TooManyViews" severity="error" />
     <issue id="UnusedIds" severity="error" />
     <issue id="UnusedNamespace" severity="error" />
-    <issue id="UnusedResources" severity="error"/>
+    <issue id="UnusedResources" severity="error" />
     <issue id="UseCompoundDrawables" severity="warning" />
     <issue id="UselessLeaf" severity="error" />
     <issue id="UselessParent" severity="warning" />
@@ -77,7 +77,7 @@
     <!-- Usability -->
     <issue id="AlwaysShowAction" severity="warning" />
     <issue id="BackButton" severity="error" />
-    <issue id="GoogleAppIndexingApiWarning" severity="warning"/>
+    <issue id="GoogleAppIndexingApiWarning" severity="warning" />
     <issue id="NegativeMargin" severity="warning" />
     <issue id="SelectableText" severity="warning" />
     <issue id="TextFields" severity="error" />
@@ -95,7 +95,7 @@
     <!-- Internationalization:Bidirectional text -->
     <issue id="ExtraTranslation" severity="error" />
     <issue id="MissingTranslation" severity="error">
-        <ignore path="**/strings_by_country.xml"/>
+        <ignore path="**/strings_by_country.xml" />
     </issue>
     <issue id="RtlHardcoded" severity="ignore" />
     <issue id="RtlSymmetry" severity="ignore" />
