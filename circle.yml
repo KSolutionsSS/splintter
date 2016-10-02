@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.3,android-24,extra-android-support
+    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.3,android-24,extras
     - ./gradlew dependencies
 
 test:
