@@ -17,8 +17,6 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.MaterialIcons;
 import com.ksss.splintter.R;
-import com.ksss.splintter.features.group.backend.GroupBO;
-import com.ksss.splintter.features.group.backend.GroupBOImpl;
 import com.ksss.splintter.features.group.backend.PersonBO;
 import com.ksss.splintter.features.group.backend.PersonBOImpl;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
@@ -47,13 +45,11 @@ public class GroupExpensesFragment extends Fragment {
     private RecyclerView expensesRecyclerView;
 
     private PersonBO personBO;
-    private GroupBO groupBO;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         personBO = new PersonBOImpl();
-        groupBO = new GroupBOImpl();
 
         group = getCallback().getGroup();
     }
@@ -166,7 +162,8 @@ public class GroupExpensesFragment extends Fragment {
         try {
             callback = ((ExpenseManager) getActivity());
         } catch (ClassCastException e) {
-            throw new IllegalStateException(String.format("Container Activity must implement %s", ExpenseManager.class.getSimpleName()));
+            throw new IllegalStateException(
+                String.format("Container Activity must implement %s", ExpenseManager.class.getSimpleName()), e);
             // TODO: 7/17/16 Add log?
         }
 
@@ -215,6 +212,13 @@ public class GroupExpensesFragment extends Fragment {
         @Override
         public int getItemCount() {
             return expenses.size();
+        }
+
+        @Override
+        public String toString() {
+            return "ExpensesAdapter{" +
+                "expenses=" + expenses +
+                '}';
         }
     }
 }
