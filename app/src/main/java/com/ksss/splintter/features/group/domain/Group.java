@@ -6,7 +6,8 @@ import android.support.annotation.NonNull;
  * Created by Nahuel Barrios on 7/17/16.
  */
 public class Group {
-    private String name;
+
+    private final String name;
 
     public Group(@NonNull String name) {
         this.name = name;
@@ -14,5 +15,12 @@ public class Group {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+            "name='" + name + '\'' +
+            '}';
     }
 }

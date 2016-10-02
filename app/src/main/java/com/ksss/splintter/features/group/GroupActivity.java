@@ -10,12 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
-
 import com.ksss.splintter.R;
 import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.view.GroupExpensesFragment;
 import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
-
 import timber.log.Timber;
 
 /**
@@ -24,8 +22,6 @@ import timber.log.Timber;
 public class GroupActivity extends AppCompatActivity {
 
     private Group group;
-
-    private ViewPager viewPager;
 
     private enum ViewMode {
         CREATE("create"), VIEW("view");
@@ -72,7 +68,7 @@ public class GroupActivity extends AppCompatActivity {
     private void createViewPager() {
         GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -149,4 +145,10 @@ public class GroupActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public String toString() {
+        return "GroupActivity{" +
+            "group=" + group +
+            '}';
+    }
 }
