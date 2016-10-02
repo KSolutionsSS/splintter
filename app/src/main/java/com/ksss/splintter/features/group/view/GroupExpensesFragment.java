@@ -14,12 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.MaterialIcons;
 import com.ksss.splintter.R;
-import com.ksss.splintter.features.group.backend.GroupBO;
-import com.ksss.splintter.features.group.backend.GroupBOImpl;
 import com.ksss.splintter.features.group.backend.PersonBO;
 import com.ksss.splintter.features.group.backend.PersonBOImpl;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
@@ -27,14 +24,12 @@ import com.ksss.splintter.features.group.backend.exception.NameTooShortException
 import com.ksss.splintter.features.group.domain.Expense;
 import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.domain.Member;
-
+import hugo.weaving.DebugLog;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 /**
@@ -50,13 +45,11 @@ public class GroupExpensesFragment extends Fragment {
     private RecyclerView expensesRecyclerView;
 
     private PersonBO personBO;
-    private GroupBO groupBO;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         personBO = new PersonBOImpl();
-        groupBO = new GroupBOImpl();
 
         group = getCallback().getGroup();
     }
@@ -136,7 +129,7 @@ public class GroupExpensesFragment extends Fragment {
     }
 
     private void onNewExpenseAdded() {
-        Member member = ((MembersAdapter) GroupExpensesFragment.this.personEditText.getAdapter()).findByName(GroupExpensesFragment.this.personEditText.getText().toString());
+        Member member = ((MembersAdapter) personEditText.getAdapter()).findByName(personEditText.getText().toString());
 
         group = getCallback().getGroup();
         if (member == null) {
@@ -150,7 +143,7 @@ public class GroupExpensesFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            member = new Member(GroupExpensesFragment.this.personEditText.getText().toString());
+            member = new Member(personEditText.getText().toString());
             // TODO: 7/19/16 Replace this list#for with a call to the service
             group.addMember(member);
         }
@@ -169,7 +162,8 @@ public class GroupExpensesFragment extends Fragment {
         try {
             callback = ((ExpenseManager) getActivity());
         } catch (ClassCastException e) {
-            throw new IllegalStateException(String.format("Container Activity must implement %s", ExpenseManager.class.getSimpleName()));
+            throw new IllegalStateException(
+                String.format("Container Activity must implement %s", ExpenseManager.class.getSimpleName()), e);
             // TODO: 7/17/16 Add log?
         }
 
@@ -181,16 +175,16 @@ public class GroupExpensesFragment extends Fragment {
         private final List<Expense> expenses;
 
         public ExpensesAdapter(@NonNull List<Expense> groupExpenses) {
-            this.expenses = groupExpenses;
+            expenses = groupExpenses;
         }
 
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView person;
-            private TextView amount;
-            private TextView description;
-            private TextView date;
+            private final TextView person;
+            private final TextView amount;
+            private final TextView description;
+            private final TextView date;
 
             public ViewHolder(View layout) {
                 super(layout);
@@ -218,6 +212,13 @@ public class GroupExpensesFragment extends Fragment {
         @Override
         public int getItemCount() {
             return expenses.size();
+        }
+
+        @Override
+        public String toString() {
+            return "ExpensesAdapter{" +
+                "expenses=" + expenses +
+                '}';
         }
     }
 }
