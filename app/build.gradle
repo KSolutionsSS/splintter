@@ -36,11 +36,6 @@ staticCodeAnalysis {
     androidLint = true
 
     ignoreErrors = false
-
-    // defaut rules
-//    findbugsExclude = "$project.rootProject.projectDir/config/findbugs/excludeFilter.xml"
-//    checkstyleRules = "http://static.monits.com/checkstyle.xml"
-//    pmdRules = [ "http://static.monits.com/pmd.xml", "http://static.monits.com/pmd-android.xml" ]
 }
 
 dependencies {
