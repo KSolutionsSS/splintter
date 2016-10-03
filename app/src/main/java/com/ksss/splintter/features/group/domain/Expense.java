@@ -16,6 +16,8 @@ public class Expense extends RealmObject {
 
     private Group group;
 
+    private Person person;
+
     /**
      * Default constructor is required by Realm.
      */
@@ -48,6 +50,14 @@ public class Expense extends RealmObject {
         return group;
     }
 
+    public void setPerson(final Person person) {
+        this.person = person;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
     @Override
     public String toString() {
         return "Expense{" +
@@ -55,6 +65,7 @@ public class Expense extends RealmObject {
             ", description='" + description + '\'' +
             ", date=" + date +
             ", group=" + group +
+            ", person=" + person +
             '}';
     }
 }

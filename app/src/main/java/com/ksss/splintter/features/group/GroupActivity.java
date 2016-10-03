@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import com.ksss.splintter.R;
 import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Person;
 import com.ksss.splintter.features.group.view.ExpenseManager;
 import com.ksss.splintter.features.group.view.GroupExpensesFragment;
 import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
@@ -34,10 +33,11 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
         private final String id;
 
         ViewMode(String action) {
-            this.id = action;
+            id = action;
         }
 
-        private static ViewMode from(String action) {
+        /* default */
+        static ViewMode from(final String action) {
             ViewMode result = VIEW;
 
             for (ViewMode each : values()) {
@@ -61,13 +61,14 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mockView();
-
-        ViewMode mode = ViewMode.from(getIntent().getData().getPathSegments().get(0));
+        final ViewMode mode = ViewMode.from(getIntent().getData().getPathSegments().get(0));
 
         if (mode == ViewMode.CREATE) {
             // TODO: 7/17/16 What about creating a temporal name to let users write down what they really want?
             handleCreate();
+        } else {
+            mockView();
+            getSupportActionBar().setTitle(group.getName());
         }
 
         handleView();
@@ -78,23 +79,11 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
      */
     @DebugLog
     private void mockView() {
-        group = new Group("Mobile");
-        group.addPerson(new Person("Babu"));
-        group.addPerson(new Person("Caro"));
-        group.addPerson(new Person("Fede"));
-        group.addPerson(new Person("Juli"));
-        group.addPerson(new Person("Mati"));
-        group.addPerson(new Person("Mauri"));
-        group.addPerson(new Person("Nahu"));
-        group.addPerson(new Person("Paul"));
-        group.addPerson(new Person("Tincho"));
+        final Realm db = Realm.getDefaultInstance();
 
-        final Realm realm = Realm.getDefaultInstance();
+        group = db.where(Group.class).findFirst();
 
-        Timber.e("Members: %s", realm.where(Person.class).findAll().size());
-        Timber.e("Groups: %s", realm.where(Group.class).findAll().size());
-
-        realm.close();
+        db.close();
     }
 
     private void handleView() {
@@ -105,7 +94,7 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
 
     @DebugLog
     private void createViewPager() {
-        GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
+        final GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
@@ -137,7 +126,7 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
 
     private class GroupPagerAdapter extends FragmentPagerAdapter {
 
-        private GroupPagerAdapter(FragmentManager fm) {
+        /* default */ GroupPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

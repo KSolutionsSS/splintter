@@ -166,7 +166,7 @@ public class GroupExpensesFragment extends Fragment {
                     Float.valueOf(amountEditText.getText().toString())
                     , descriptionEditText.getText().toString()
                     , group
-                );
+                    , person);
 
                 person.getExpenses().add(expense);
                 group.addPerson(person);
@@ -248,8 +248,7 @@ public class GroupExpensesFragment extends Fragment {
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             final Expense expense = expenses.get(position);
 
-            // TODO: 10/2/16 Stop hard-coding this value!
-            holder.person.setText("Nahue");
+            holder.person.setText(expense.getPerson().getName());
             holder.amount.setText(expense.getAmount().toString());
             holder.description.setText(expense.getDescription());
             holder.date.setText(new SimpleDateFormat("MMMM, dd", Locale.getDefault()).format(expense.getDate().getTime()));

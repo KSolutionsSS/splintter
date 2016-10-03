@@ -3,6 +3,7 @@ package com.ksss.splintter;
 import com.ksss.splintter.features.group.backend.GroupBo;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
 import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
+import com.ksss.splintter.features.group.backend.impl.ExpenseBoImpl;
 import com.ksss.splintter.features.group.backend.impl.GroupBoImpl;
 import com.ksss.splintter.features.group.backend.impl.PersonBoImpl;
 import com.ksss.splintter.features.group.domain.Expense;
@@ -160,15 +161,12 @@ final class DummyDatabaseHelper {
             randomGroup.addPerson(person);
         }
 
-        return createRandomExpense(randomGroup);
+        return createRandomExpense(randomGroup, person);
     }
 
-    private static Expense createRandomExpense(final Group group) {
+    private static Expense createRandomExpense(final Group group, final Person person) {
         final Float randomAmount = (float) randomBetween(1000, 10);
-        return new Expense(
-            randomAmount
-            , "Dummy description for amount " + randomAmount
-            , group);
+        return new ExpenseBoImpl().create(randomAmount, "Dummy description for amount " + randomAmount, group, person);
     }
 
     @DebugLog
