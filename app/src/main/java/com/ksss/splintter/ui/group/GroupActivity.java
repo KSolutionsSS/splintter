@@ -36,8 +36,7 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
             id = action;
         }
 
-        /* default */
-        static ViewMode from(final String action) {
+        /* default */ static ViewMode from(final String action) {
             ViewMode result = VIEW;
 
             for (ViewMode each : values()) {

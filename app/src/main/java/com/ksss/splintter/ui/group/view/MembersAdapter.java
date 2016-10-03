@@ -15,7 +15,7 @@ public class MembersAdapter extends ArrayAdapter<String> {
 
     private final List<Person> persons;
 
-    /* package */ MembersAdapter(Context context, List<Person> persons) {
+    /* default */ MembersAdapter(Context context, List<Person> persons) {
         super(context, android.R.layout.simple_dropdown_item_1line, parse(persons));
         this.persons = persons;
     }
@@ -31,7 +31,7 @@ public class MembersAdapter extends ArrayAdapter<String> {
     }
 
     @Nullable
-    /* package */ Person findByName(@NonNull String name) {
+    /* default */ Person findByName(@NonNull String name) {
         Person result = null;
         for (Person eachPerson : persons) {
             if (eachPerson.getName().equalsIgnoreCase(name)) {
