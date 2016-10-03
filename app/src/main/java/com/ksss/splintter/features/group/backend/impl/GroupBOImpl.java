@@ -1,21 +1,21 @@
-package com.ksss.splintter.features.group.backend;
+package com.ksss.splintter.features.group.backend.impl;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
+import com.ksss.splintter.features.group.backend.GroupBo;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
 import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
-
-import timber.log.Timber;
+import com.ksss.splintter.features.group.domain.Group;
+import hugo.weaving.DebugLog;
 
 /**
  * Created by Nahuel Barrios on 7/19/16.
  */
+public class GroupBoImpl implements GroupBo {
 
-public class PersonBOImpl implements PersonBO {
-
+    @DebugLog
     @Override
-    public void create(@NonNull String name) throws EmptyNameException, NameTooShortException {
+    public Group create(@NonNull final String name) throws EmptyNameException, NameTooShortException {
         if (TextUtils.isEmpty(name)) {
             throw new EmptyNameException();
         }
@@ -24,7 +24,7 @@ public class PersonBOImpl implements PersonBO {
             throw new NameTooShortException();
         }
 
-        // TODO: 7/19/16 Persist it!
-        Timber.e("Must persist a new person!");
+        return new Group(name);
     }
+
 }

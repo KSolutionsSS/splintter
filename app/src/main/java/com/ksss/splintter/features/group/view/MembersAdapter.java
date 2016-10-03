@@ -4,9 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
-
-import com.ksss.splintter.features.group.domain.Member;
-
+import com.ksss.splintter.features.group.domain.Person;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,29 +13,29 @@ import java.util.List;
  */
 public class MembersAdapter extends ArrayAdapter<String> {
 
-    private final List<Member> members;
+    private final List<Person> persons;
 
-    /* package */ MembersAdapter(Context context, List<Member> members) {
-        super(context, android.R.layout.simple_dropdown_item_1line, parse(members));
-        this.members = members;
+    /* package */ MembersAdapter(Context context, List<Person> persons) {
+        super(context, android.R.layout.simple_dropdown_item_1line, parse(persons));
+        this.persons = persons;
     }
 
-    private static List<String> parse(List<Member> members) {
+    private static List<String> parse(List<Person> persons) {
         List<String> membersName = new ArrayList<>();
 
-        for (Member eachMember : members) {
-            membersName.add(eachMember.getName());
+        for (Person eachPerson : persons) {
+            membersName.add(eachPerson.getName());
         }
 
         return membersName;
     }
 
     @Nullable
-    /* package */ Member findByName(@NonNull String name) {
-        Member result = null;
-        for (Member eachMember : members) {
-            if (eachMember.getName().equalsIgnoreCase(name)) {
-                result = eachMember;
+    /* package */ Person findByName(@NonNull String name) {
+        Person result = null;
+        for (Person eachPerson : persons) {
+            if (eachPerson.getName().equalsIgnoreCase(name)) {
+                result = eachPerson;
                 break;
             }
         }
@@ -48,7 +46,7 @@ public class MembersAdapter extends ArrayAdapter<String> {
     @Override
     public String toString() {
         return "MembersAdapter{" +
-                "members=" + members +
+            "persons=" + persons +
                 '}';
     }
 }

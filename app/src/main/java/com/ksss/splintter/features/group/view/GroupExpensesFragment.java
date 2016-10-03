@@ -17,20 +17,21 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.MaterialIcons;
 import com.ksss.splintter.R;
-import com.ksss.splintter.features.group.backend.PersonBO;
-import com.ksss.splintter.features.group.backend.PersonBOImpl;
+import com.ksss.splintter.features.group.backend.ExpenseBo;
+import com.ksss.splintter.features.group.backend.PersonBo;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
 import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
+import com.ksss.splintter.features.group.backend.impl.ExpenseBoImpl;
+import com.ksss.splintter.features.group.backend.impl.PersonBoImpl;
 import com.ksss.splintter.features.group.domain.Expense;
 import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Member;
+import com.ksss.splintter.features.group.domain.Person;
 import hugo.weaving.DebugLog;
-import java.math.BigDecimal;
+import io.realm.Realm;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import timber.log.Timber;
 
 /**
  * Created by Nahuel Barrios on 7/16/16.
@@ -44,12 +45,14 @@ public class GroupExpensesFragment extends Fragment {
     private EditText amountEditText;
     private RecyclerView expensesRecyclerView;
 
-    private PersonBO personBO;
+    private PersonBo personBo;
+    private ExpenseBo expenseBo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        personBO = new PersonBOImpl();
+        personBo = new PersonBoImpl();
+        expenseBo = new ExpenseBoImpl();
 
         group = getCallback().getGroup();
     }
@@ -58,7 +61,7 @@ public class GroupExpensesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.group_expenses_layout, container, false);
+        final View layout = inflater.inflate(R.layout.group_expenses_layout, container, false);
         personEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_person);
         amountEditText = (EditText) layout.findViewById(R.id.add_expense_amount);
         descriptionEditText = (AutoCompleteTextView) layout.findViewById(R.id.add_expense_description);
@@ -66,20 +69,17 @@ public class GroupExpensesFragment extends Fragment {
 
         setupRecyclerView();
 
-        IconDrawable iconDrawable = new IconDrawable(getActivity(), MaterialIcons.md_plus_one);
+        final IconDrawable iconDrawable = new IconDrawable(getActivity(), MaterialIcons.md_plus_one);
         iconDrawable.colorRes(android.R.color.white);
 
-        FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.fab);
-        fab.setImageDrawable(iconDrawable);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton floatingActionButton = (FloatingActionButton) layout.findViewById(R.id.fab);
+        floatingActionButton.setImageDrawable(iconDrawable);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
 
             @DebugLog
             @Override
             public void onClick(View view) {
-                // TODO: 7/18/16 Add person?
-                Timber.e("What should I do in this case???");
                 onNewExpenseAdded();
-
             }
         });
 
@@ -96,10 +96,10 @@ public class GroupExpensesFragment extends Fragment {
 
     private List<Expense> getGroupExpenses() {
 
-        List<Expense> result = new ArrayList<>();
+        final List<Expense> result = new ArrayList<>();
 
-        for (Member eachMember : group.getMembers()) {
-            for (Expense eachExpense : eachMember.getExpenses()) {
+        for (final Person eachPerson : group.getPersons()) {
+            for (final Expense eachExpense : eachPerson.getExpenses()) {
                 result.add(eachExpense);
             }
         }
@@ -116,40 +116,61 @@ public class GroupExpensesFragment extends Fragment {
     }
 
     private void setupMembersAutocomplete() {
-        personEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getMembers()));
+        personEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getPersons()));
     }
 
     private void setupDescriptionAutocomplete() {
         // TODO: 7/17/16 Make it dynamic! realm.io comes to playground again =)
-        String[] hardCodedSuggestions = {"Bebida", "Nafta", "Pizzas"};
+        final String[] hardCodedSuggestions = { "Bebida", "Nafta", "Pizzas" };
 
         // TODO: 7/17/16 I don't need an adapter like MembersAdapter here because descriptions are just a simple String
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, hardCodedSuggestions);
+        final ArrayAdapter<String> adapter =
+            new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, hardCodedSuggestions);
         descriptionEditText.setAdapter(adapter);
     }
 
-    private void onNewExpenseAdded() {
-        Member member = ((MembersAdapter) personEditText.getAdapter()).findByName(personEditText.getText().toString());
+    /**
+     * // TODO: 10/2/16 This behavior MUST be in a Business Object
+     *
+     * Package-protected because method is used from an inner/anonymous class.
+     */
+    /* default */ void onNewExpenseAdded() {
+        Person person = ((MembersAdapter) personEditText.getAdapter()).findByName(personEditText.getText().toString());
 
         group = getCallback().getGroup();
-        if (member == null) {
+        if (person == null) {
             // TODO: 7/17/16 Make a class diagram taking into account that members will share groups so we must know which expense is related to which group
             try {
-                personBO.create(personEditText.getText().toString());
+                person = personBo.create(personEditText.getText().toString());
+
                 // TODO: 7/19/16 Update person adapter!
+
             } catch (EmptyNameException e) {
                 e.printStackTrace();
             } catch (NameTooShortException e) {
                 e.printStackTrace();
             }
 
-            member = new Member(personEditText.getText().toString());
-            // TODO: 7/19/16 Replace this list#for with a call to the service
-            group.addMember(member);
+            if (person == null) {
+                // TODO: 10/2/16 Show error!
+            } else {
+                final Expense expense = expenseBo.create(
+                    Float.valueOf(amountEditText.getText().toString())
+                    , descriptionEditText.getText().toString()
+                    , group
+                );
+
+                person.getExpenses().add(expense);
+                group.addPerson(person);
+
+                //        // TODO: 10/2/16 Persist persons from another thread!
+                final Realm db = Realm.getDefaultInstance();
+                db.beginTransaction();
+                db.insertOrUpdate(group);
+                db.commitTransaction();
+            }
         }
 
-        member.addExpense(new BigDecimal(amountEditText.getText().toString()), descriptionEditText.getText().toString());
-        // TODO: 7/17/16 What about Realm.io?
     }
 
     /**
@@ -158,10 +179,10 @@ public class GroupExpensesFragment extends Fragment {
      * @return
      */
     private ExpenseManager getCallback() {
-        ExpenseManager callback;
+        final ExpenseManager callback;
         try {
             callback = ((ExpenseManager) getActivity());
-        } catch (ClassCastException e) {
+        } catch (final ClassCastException e) {
             throw new IllegalStateException(
                 String.format("Container Activity must implement %s", ExpenseManager.class.getSimpleName()), e);
             // TODO: 7/17/16 Add log?

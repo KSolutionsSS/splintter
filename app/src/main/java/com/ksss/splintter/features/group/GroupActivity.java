@@ -13,14 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import com.ksss.splintter.R;
 import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Member;
+import com.ksss.splintter.features.group.domain.Person;
 import com.ksss.splintter.features.group.view.ExpenseManager;
 import com.ksss.splintter.features.group.view.GroupExpensesFragment;
 import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
-
 import hugo.weaving.DebugLog;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import timber.log.Timber;
 
 /**
@@ -60,7 +58,7 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mockView();
@@ -81,34 +79,31 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
     @DebugLog
     private void mockView() {
         group = new Group("Mobile");
-        group.addMember(new Member("Babu"));
-        group.addMember(new Member("Caro"));
-        group.addMember(new Member("Fede"));
-        group.addMember(new Member("Juli"));
-        group.addMember(new Member("Mati"));
-        group.addMember(new Member("Mauri"));
-        group.addMember(new Member("Nahu"));
-        group.addMember(new Member("Paul"));
-        group.addMember(new Member("Tincho"));
+        group.addPerson(new Person("Babu"));
+        group.addPerson(new Person("Caro"));
+        group.addPerson(new Person("Fede"));
+        group.addPerson(new Person("Juli"));
+        group.addPerson(new Person("Mati"));
+        group.addPerson(new Person("Mauri"));
+        group.addPerson(new Person("Nahu"));
+        group.addPerson(new Person("Paul"));
+        group.addPerson(new Person("Tincho"));
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
-        Realm.setDefaultConfiguration(realmConfiguration);
+        final Realm realm = Realm.getDefaultInstance();
 
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-        Timber.e("Members: %s", realm.where(Member.class).findAll().size());
+        Timber.e("Members: %s", realm.where(Person.class).findAll().size());
         Timber.e("Groups: %s", realm.where(Group.class).findAll().size());
-        realm.commitTransaction();
+
+        realm.close();
     }
 
     private void handleView() {
-        Timber.d("Creating ViewPager...");
         setContentView(R.layout.group_view);
 
         createViewPager();
     }
 
+    @DebugLog
     private void createViewPager() {
         GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
 

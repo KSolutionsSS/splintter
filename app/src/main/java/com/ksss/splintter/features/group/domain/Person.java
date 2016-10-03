@@ -1,50 +1,47 @@
 package com.ksss.splintter.features.group.domain;
 
-import android.support.annotation.NonNull;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import java.util.List;
 
 /**
- * // TODO: 7/17/16 Add auto-value!(?)
  * Created by Nahuel Barrios on 7/17/16.
  */
-public class Group extends RealmObject {
+public class Person extends RealmObject {
 
     @PrimaryKey
     private String name;
 
-    private RealmList<Person> persons;
+    private RealmList<Expense> expenses;
 
     /**
      * Default constructor is required by Realm.
      */
-    public Group() {
+    public Person() {
         // Do nothing.
     }
 
-    public Group(@NonNull final String name) {
+    public Person(final String name) {
         this.name = name;
-        persons = new RealmList<>();
+        expenses = new RealmList<>();
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(final List<Expense> expenses) {
+        this.expenses = (RealmList<Expense>) expenses;
     }
 
     public String getName() {
         return name;
     }
 
-    @NonNull
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public void addPerson(final Person person) {
-        persons.add(person);
-    }
-
     @Override
     public String toString() {
-        return "Group{" +
+        return "Person{" +
             "name='" + name + '\'' +
             '}';
     }

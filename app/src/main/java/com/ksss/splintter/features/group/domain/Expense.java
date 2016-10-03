@@ -1,35 +1,36 @@
 package com.ksss.splintter.features.group.domain;
 
 import android.support.annotation.NonNull;
-
-import java.math.BigDecimal;
+import io.realm.RealmObject;
 import java.util.Calendar;
 
 /**
  * Created by Nahuel Barrios on 7/17/16.
  */
-public class Expense {
+public class Expense extends RealmObject {
 
-    private BigDecimal amount;
+    private Float amount;
     private String description;
-    private Calendar date;
 
-    /* package */ Expense(@NonNull BigDecimal amount, @NonNull String description) {
+    private long date;
+
+    private Group group;
+
+    /**
+     * Default constructor is required by Realm.
+     */
+    public Expense() {
+        // Do nothing.
+    }
+
+    public Expense(@NonNull final Float amount, @NonNull final String description, final Group group) {
         this.amount = amount;
         this.description = description;
-        this.date = Calendar.getInstance();
+        this.group = group;
+        date = System.currentTimeMillis();
     }
 
-    @Override
-    public String toString() {
-        return "Expense{" +
-                "amount=" + amount +
-                ", description='" + description + '\'' +
-                ", date=" + date +
-                '}';
-    }
-
-    public BigDecimal getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
@@ -38,6 +39,16 @@ public class Expense {
     }
 
     public Calendar getDate() {
-        return date;
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return calendar;
+    }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+            "amount=" + amount +
+            ", description='" + description + '\'' +
+            '}';
     }
 }
