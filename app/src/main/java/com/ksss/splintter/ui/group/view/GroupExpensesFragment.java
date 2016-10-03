@@ -82,7 +82,7 @@ public class GroupExpensesFragment extends Fragment {
             @Override
             @SuppressFBWarnings(
                 value = "UCC_UNRELATED_COLLECTION_CONTENTS"
-                , justification = "UCC_UNRELATED_COLLECTION_CONTENTS: I think this is a Findbugs issue with Realm; "
+                , justification = "UCC_UNRELATED_COLLECTION_CONTENTS: I think this is a Findbugs issue."
             )
             public void onClick(final View view) {
 //                 TODO: 10/2/16 This log is here only because I can't fix Findbugs warning UP_UNUSED_PARAMETER =(
