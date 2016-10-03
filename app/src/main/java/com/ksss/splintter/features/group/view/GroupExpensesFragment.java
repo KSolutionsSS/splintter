@@ -26,12 +26,14 @@ import com.ksss.splintter.features.group.backend.impl.PersonBoImpl;
 import com.ksss.splintter.features.group.domain.Expense;
 import com.ksss.splintter.features.group.domain.Group;
 import com.ksss.splintter.features.group.domain.Person;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hugo.weaving.DebugLog;
 import io.realm.Realm;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import timber.log.Timber;
 
 /**
  * Created by Nahuel Barrios on 7/16/16.
@@ -78,7 +80,13 @@ public class GroupExpensesFragment extends Fragment {
 
             @DebugLog
             @Override
-            public void onClick(View view) {
+            @SuppressFBWarnings(
+                value = "UCC_UNRELATED_COLLECTION_CONTENTS"
+                , justification = "UCC_UNRELATED_COLLECTION_CONTENTS: I think this is a Findbugs issue with Realm; "
+            )
+            public void onClick(final View view) {
+//                 TODO: 10/2/16 This log is here only because I can't fix Findbugs warning UP_UNUSED_PARAMETER =(
+                Timber.v("Tap on viewId: %s", view.getId());
                 onNewExpenseAdded();
             }
         });
@@ -119,6 +127,7 @@ public class GroupExpensesFragment extends Fragment {
         personEditText.setAdapter(new MembersAdapter(getContext(), getCallback().getGroup().getPersons()));
     }
 
+    @SuppressFBWarnings(value = "SACM_STATIC_ARRAY_CREATED_IN_METHOD", justification = "Still under development")
     private void setupDescriptionAutocomplete() {
         // TODO: 7/17/16 Make it dynamic! realm.io comes to playground again =)
         final String[] hardCodedSuggestions = { "Bebida", "Nafta", "Pizzas" };
@@ -145,13 +154,12 @@ public class GroupExpensesFragment extends Fragment {
 
                 // TODO: 7/19/16 Update person adapter!
 
-            } catch (EmptyNameException e) {
-                e.printStackTrace();
-            } catch (NameTooShortException e) {
-                e.printStackTrace();
+            } catch (final EmptyNameException | NameTooShortException e) {
+                Timber.e(e.getMessage());
             }
 
             if (person == null) {
+                Timber.e("TODO: Show an error to the user!");
                 // TODO: 10/2/16 Show error!
             } else {
                 final Expense expense = expenseBo.create(
@@ -202,12 +210,27 @@ public class GroupExpensesFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            private final TextView person;
-            private final TextView amount;
-            private final TextView description;
-            private final TextView date;
+            /***
+             * Package-protected because method is used from an inner/anonymous class.
+             */
+            /* default */ final TextView person;
 
-            public ViewHolder(View layout) {
+            /***
+             * Package-protected because method is used from an inner/anonymous class.
+             */
+            /* default */ final TextView amount;
+
+            /***
+             * Package-protected because method is used from an inner/anonymous class.
+             */
+            /* default */ final TextView description;
+
+            /***
+             * Package-protected because method is used from an inner/anonymous class.
+             */
+            /* default */ final TextView date;
+
+            public ViewHolder(final View layout) {
                 super(layout);
                 person = (TextView) layout.findViewById(R.id.expense_person);
                 amount = (TextView) layout.findViewById(R.id.expense_amount);
@@ -217,13 +240,15 @@ public class GroupExpensesFragment extends Fragment {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
             return new ViewHolder(getActivity().getLayoutInflater().inflate(R.layout.group_view_expense, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Expense expense = expenses.get(position);
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+            final Expense expense = expenses.get(position);
+
+            // TODO: 10/2/16 Stop hard-coding this value!
             holder.person.setText("Nahue");
             holder.amount.setText(expense.getAmount().toString());
             holder.description.setText(expense.getDescription());
@@ -234,12 +259,18 @@ public class GroupExpensesFragment extends Fragment {
         public int getItemCount() {
             return expenses.size();
         }
+    }
 
-        @Override
-        public String toString() {
-            return "ExpensesAdapter{" +
-                "expenses=" + expenses +
-                '}';
-        }
+    @Override
+    public String toString() {
+        return "GroupExpensesFragment{" +
+            "group=" + group +
+            ", personEditText=" + personEditText +
+            ", descriptionEditText=" + descriptionEditText +
+            ", amountEditText=" + amountEditText +
+            ", expensesRecyclerView=" + expensesRecyclerView +
+            ", personBo=" + personBo +
+            ", expenseBo=" + expenseBo +
+            '}';
     }
 }

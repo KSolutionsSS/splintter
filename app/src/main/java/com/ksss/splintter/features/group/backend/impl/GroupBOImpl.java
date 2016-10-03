@@ -6,15 +6,18 @@ import com.ksss.splintter.features.group.backend.GroupBo;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
 import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
 import com.ksss.splintter.features.group.domain.Group;
-import hugo.weaving.DebugLog;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Created by Nahuel Barrios on 7/19/16.
  */
 public class GroupBoImpl implements GroupBo {
 
-    @DebugLog
     @Override
+    @SuppressFBWarnings(
+        value = "UCC_UNRELATED_COLLECTION_CONTENTS"
+        , justification = "I think this is a Findbugs issue with Realm"
+    )
     public Group create(@NonNull final String name) throws EmptyNameException, NameTooShortException {
         if (TextUtils.isEmpty(name)) {
             throw new EmptyNameException();

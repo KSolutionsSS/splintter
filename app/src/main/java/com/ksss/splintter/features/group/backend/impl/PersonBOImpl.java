@@ -6,7 +6,7 @@ import com.ksss.splintter.features.group.backend.PersonBo;
 import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
 import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
 import com.ksss.splintter.features.group.domain.Person;
-import hugo.weaving.DebugLog;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Created by Nahuel Barrios on 7/19/16.
@@ -14,9 +14,12 @@ import hugo.weaving.DebugLog;
 
 public class PersonBoImpl implements PersonBo {
 
-    @DebugLog
     @NonNull
     @Override
+    @SuppressFBWarnings(
+        value = "UCC_UNRELATED_COLLECTION_CONTENTS"
+        , justification = "I think this is a Findbugs issue with Realm"
+    )
     public Person create(@NonNull final String name) throws EmptyNameException, NameTooShortException {
         if (TextUtils.isEmpty(name)) {
             throw new EmptyNameException();

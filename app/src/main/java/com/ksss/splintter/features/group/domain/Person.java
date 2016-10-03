@@ -43,6 +43,7 @@ public class Person extends RealmObject {
     public String toString() {
         return "Person{" +
             "name='" + name + '\'' +
+            ", expenses=" + expenses +
             '}';
     }
 }

@@ -26,7 +26,7 @@ public class Group extends RealmObject {
 
     public Group(@NonNull final String name) {
         this.name = name;
-        persons = new RealmList<>();
+        persons = new RealmList<Person>();
     }
 
     public String getName() {
@@ -46,6 +46,7 @@ public class Group extends RealmObject {
     public String toString() {
         return "Group{" +
             "name='" + name + '\'' +
+            ", persons=" + persons +
             '}';
     }
 }

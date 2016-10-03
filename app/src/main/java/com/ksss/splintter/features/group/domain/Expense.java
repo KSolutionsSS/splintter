@@ -44,11 +44,17 @@ public class Expense extends RealmObject {
         return calendar;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
     @Override
     public String toString() {
         return "Expense{" +
             "amount=" + amount +
             ", description='" + description + '\'' +
+            ", date=" + date +
+            ", group=" + group +
             '}';
     }
 }

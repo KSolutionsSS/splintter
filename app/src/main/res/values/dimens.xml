@@ -3,17 +3,12 @@
     <dimen name="default_horizontal_padding">16dp</dimen>
     <dimen name="onboarding_horizontal_margin">16dp</dimen>
 
-    <dimen name="distance_between_views_small">8dp</dimen>
     <dimen name="distance_between_views_medium">16dp</dimen>
     <dimen name="distance_between_views_large">32dp</dimen>
 
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_medium">14sp</dimen>
-    <dimen name="font_large">18sp</dimen>
 
-    <dimen name="icon_small">16sp</dimen>
     <dimen name="icon_medium">20sp</dimen>
     <dimen name="icon_large">48sp</dimen>
-
-    <dimen name="list_icon_size">32dp</dimen>
 </resources>
