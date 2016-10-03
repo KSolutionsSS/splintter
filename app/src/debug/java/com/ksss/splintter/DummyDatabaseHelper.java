@@ -45,7 +45,7 @@ final class DummyDatabaseHelper {
         // Do nothing.
     }
 
-    static void clean() {
+    /* default */ static void clean() {
         final Realm db = Realm.getDefaultInstance();
 
         db.beginTransaction();
@@ -54,7 +54,7 @@ final class DummyDatabaseHelper {
         db.close();
     }
 
-    static void populate() {
+    /* default */ static void populate() {
         final List<Group> groups = createDummyGroups();
         totalGroups = groups.size();
 
@@ -111,7 +111,7 @@ final class DummyDatabaseHelper {
     /**
      * Check dummy database population.
      */
-    static void check() {
+    /* default */ static void check() {
         final Realm db = Realm.getDefaultInstance();
 
         final int totalGroups = db.where(Group.class).findAll().size();
