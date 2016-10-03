@@ -1,4 +1,4 @@
-package com.ksss.splintter.features.group.domain;
+package com.ksss.splintter.data.model;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;

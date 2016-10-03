@@ -1,4 +1,4 @@
-package com.ksss.splintter.features.group.domain;
+package com.ksss.splintter.data.model;
 
 import android.support.annotation.NonNull;
 import io.realm.RealmObject;

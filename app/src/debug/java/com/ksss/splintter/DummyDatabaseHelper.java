@@ -1,14 +1,14 @@
 package com.ksss.splintter;
 
-import com.ksss.splintter.features.group.backend.GroupBo;
-import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
-import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
-import com.ksss.splintter.features.group.backend.impl.ExpenseBoImpl;
-import com.ksss.splintter.features.group.backend.impl.GroupBoImpl;
-import com.ksss.splintter.features.group.backend.impl.PersonBoImpl;
-import com.ksss.splintter.features.group.domain.Expense;
-import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Person;
+import com.ksss.splintter.data.business.GroupBo;
+import com.ksss.splintter.data.business.exception.EmptyNameException;
+import com.ksss.splintter.data.business.exception.NameTooShortException;
+import com.ksss.splintter.data.business.impl.ExpenseBoImpl;
+import com.ksss.splintter.data.business.impl.GroupBoImpl;
+import com.ksss.splintter.data.business.impl.PersonBoImpl;
+import com.ksss.splintter.data.model.Expense;
+import com.ksss.splintter.data.model.Group;
+import com.ksss.splintter.data.model.Person;
 import hugo.weaving.DebugLog;
 import io.realm.Realm;
 import io.realm.RealmList;

@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
  */
 public class SafeIntent extends Intent {
 
-    public SafeIntent(@NonNull Uri uri) {
+    public SafeIntent(@NonNull final Uri uri) {
         setPackage(getPackage());
         setData(uri);
     }

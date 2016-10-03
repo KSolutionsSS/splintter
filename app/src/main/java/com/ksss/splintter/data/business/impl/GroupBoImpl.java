@@ -1,11 +1,11 @@
-package com.ksss.splintter.features.group.backend.impl;
+package com.ksss.splintter.data.business.impl;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import com.ksss.splintter.features.group.backend.GroupBo;
-import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
-import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
-import com.ksss.splintter.features.group.domain.Group;
+import com.ksss.splintter.data.business.GroupBo;
+import com.ksss.splintter.data.business.exception.EmptyNameException;
+import com.ksss.splintter.data.business.exception.NameTooShortException;
+import com.ksss.splintter.data.model.Group;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -29,5 +29,4 @@ public class GroupBoImpl implements GroupBo {
 
         return new Group(name);
     }
-
 }

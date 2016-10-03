@@ -1,4 +1,4 @@
-package com.ksss.splintter.features.group;
+package com.ksss.splintter.ui.group;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import com.ksss.splintter.R;
-import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.view.ExpenseManager;
-import com.ksss.splintter.features.group.view.GroupExpensesFragment;
-import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
+import com.ksss.splintter.data.model.Group;
+import com.ksss.splintter.ui.group.view.ExpenseManager;
+import com.ksss.splintter.ui.group.view.GroupExpensesFragment;
+import com.ksss.splintter.ui.group.view.GroupExpensesSummaryFragment;
 import hugo.weaving.DebugLog;
 import io.realm.Realm;
 import timber.log.Timber;

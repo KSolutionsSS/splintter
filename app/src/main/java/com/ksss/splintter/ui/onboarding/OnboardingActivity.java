@@ -1,12 +1,11 @@
-package com.ksss.splintter.features.onboarding;
+package com.ksss.splintter.ui.onboarding;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.ksss.splintter.Intents;
 import com.ksss.splintter.R;
+import com.ksss.splintter.ui.Intents;
 
 /**
  * Created by Nahuel Barrios on 7/16/16.

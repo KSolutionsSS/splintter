@@ -1,11 +1,11 @@
-package com.ksss.splintter.features.group.backend.impl;
+package com.ksss.splintter.data.business.impl;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import com.ksss.splintter.features.group.backend.PersonBo;
-import com.ksss.splintter.features.group.backend.exception.EmptyNameException;
-import com.ksss.splintter.features.group.backend.exception.NameTooShortException;
-import com.ksss.splintter.features.group.domain.Person;
+import com.ksss.splintter.data.business.PersonBo;
+import com.ksss.splintter.data.business.exception.EmptyNameException;
+import com.ksss.splintter.data.business.exception.NameTooShortException;
+import com.ksss.splintter.data.model.Person;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

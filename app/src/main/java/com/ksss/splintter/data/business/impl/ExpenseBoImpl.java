@@ -1,9 +1,9 @@
-package com.ksss.splintter.features.group.backend.impl;
+package com.ksss.splintter.data.business.impl;
 
-import com.ksss.splintter.features.group.backend.ExpenseBo;
-import com.ksss.splintter.features.group.domain.Expense;
-import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Person;
+import com.ksss.splintter.data.business.ExpenseBo;
+import com.ksss.splintter.data.model.Expense;
+import com.ksss.splintter.data.model.Group;
+import com.ksss.splintter.data.model.Person;
 
 /**
  * Created by Nahuel Barrios on 10/2/16.

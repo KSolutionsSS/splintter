@@ -1,10 +1,10 @@
-package com.ksss.splintter.features.group.view;
+package com.ksss.splintter.ui.group.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
-import com.ksss.splintter.features.group.domain.Person;
+import com.ksss.splintter.data.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 

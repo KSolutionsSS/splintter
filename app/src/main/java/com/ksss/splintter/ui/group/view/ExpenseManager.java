@@ -1,8 +1,7 @@
-package com.ksss.splintter.features.group.view;
+package com.ksss.splintter.ui.group.view;
 
 import android.support.annotation.NonNull;
-
-import com.ksss.splintter.features.group.domain.Group;
+import com.ksss.splintter.data.model.Group;
 
 /**
  * // TODO: 7/17/16 This is very wrong
