@@ -1,8 +1,7 @@
-package com.ksss.splintter;
+package com.ksss.splintter.ui;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-
 import com.ksss.splintter.util.SafeIntent;
 
 /**

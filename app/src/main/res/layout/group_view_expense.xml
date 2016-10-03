@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/onboarding_horizontal_margin">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/onboarding_horizontal_margin">
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/expense_row_image"
@@ -16,7 +16,7 @@
         android:textColor="@color/icon_default"
         android:textSize="@dimen/icon_large"
         tools:ignore="HardcodedText"
-        tools:text="U" />
+        tools:text="U"/>
 
     <LinearLayout
         android:id="@+id/expense_main_content_container"
@@ -31,10 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            tools:text="Nahu gasto" />
+            tools:text="Nahu gasto"/>
 
         <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/expense_price_preffix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/distance_between_views_medium"
@@ -42,7 +41,7 @@
             android:textColor="@color/icon_default"
             android:textSize="@dimen/icon_medium"
             tools:ignore="HardcodedText"
-            tools:text="$" />
+            tools:text="$"/>
 
         <TextView
             android:id="@+id/expense_amount"
@@ -50,11 +49,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            tools:text="99" />
+            tools:text="99"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/expense_secondary_content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/expense_main_content_container"
@@ -66,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
-            tools:text="Nafta" />
+            tools:text="Nafta"/>
 
         <TextView
             android:id="@+id/expense_date"
@@ -74,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            tools:text="16/10" />
+            tools:text="16/10"/>
     </LinearLayout>
 
 

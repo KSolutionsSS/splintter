@@ -1,4 +1,4 @@
-package com.ksss.splintter.features.group;
+package com.ksss.splintter.ui.group;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,13 +12,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import com.ksss.splintter.R;
-import com.ksss.splintter.features.group.domain.Group;
-import com.ksss.splintter.features.group.domain.Member;
-import com.ksss.splintter.features.group.view.ExpenseManager;
-import com.ksss.splintter.features.group.view.GroupExpensesFragment;
-import com.ksss.splintter.features.group.view.GroupExpensesSummaryFragment;
-
+import com.ksss.splintter.data.model.Group;
+import com.ksss.splintter.ui.group.view.ExpenseManager;
+import com.ksss.splintter.ui.group.view.GroupExpensesFragment;
+import com.ksss.splintter.ui.group.view.GroupExpensesSummaryFragment;
 import hugo.weaving.DebugLog;
+import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -34,10 +33,10 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
         private final String id;
 
         ViewMode(String action) {
-            this.id = action;
+            id = action;
         }
 
-        private static ViewMode from(String action) {
+        /* default */ static ViewMode from(final String action) {
             ViewMode result = VIEW;
 
             for (ViewMode each : values()) {
@@ -58,16 +57,17 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mockView();
-
-        ViewMode mode = ViewMode.from(getIntent().getData().getPathSegments().get(0));
+        final ViewMode mode = ViewMode.from(getIntent().getData().getPathSegments().get(0));
 
         if (mode == ViewMode.CREATE) {
             // TODO: 7/17/16 What about creating a temporal name to let users write down what they really want?
             handleCreate();
+        } else {
+            mockView();
+            getSupportActionBar().setTitle(group.getName());
         }
 
         handleView();
@@ -78,27 +78,22 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
      */
     @DebugLog
     private void mockView() {
-        group = new Group("Mobile");
-        group.addMember(new Member("Babu"));
-        group.addMember(new Member("Caro"));
-        group.addMember(new Member("Fede"));
-        group.addMember(new Member("Juli"));
-        group.addMember(new Member("Mati"));
-        group.addMember(new Member("Mauri"));
-        group.addMember(new Member("Nahu"));
-        group.addMember(new Member("Paul"));
-        group.addMember(new Member("Tincho"));
+        final Realm db = Realm.getDefaultInstance();
+
+        group = db.where(Group.class).findFirst();
+
+        db.close();
     }
 
     private void handleView() {
-        Timber.d("Creating ViewPager...");
         setContentView(R.layout.group_view);
 
         createViewPager();
     }
 
+    @DebugLog
     private void createViewPager() {
-        GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
+        final GroupPagerAdapter pagerAdapter = new GroupPagerAdapter(getSupportFragmentManager());
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
@@ -130,7 +125,7 @@ public class GroupActivity extends AppCompatActivity implements ExpenseManager {
 
     private class GroupPagerAdapter extends FragmentPagerAdapter {
 
-        private GroupPagerAdapter(FragmentManager fm) {
+        /* default */ GroupPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
